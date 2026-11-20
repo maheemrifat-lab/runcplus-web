@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunCplus — Live C/C++ Cloud IDE & Sandbox</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <span class="logo-symbol">C<span class="plus">+</span></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">RunCplus</span>
+          <span class="brand-subtitle">Cloud IDE & Sandbox</span>
+        </div>
+      </div>
+
+      <div class="status-pills">
+        <div class="status-pill online" id="status-compiler">
+          <span class="dot"></span>
+          <span class="label">GCC 15.3 (C++20)</span>
+        </div>
+        <div class="status-pill online" id="status-grpc">
+          <span class="dot"></span>
+          <span class="label">gRPC Sandbox (:50051)</span>
+        </div>
+        <div class="status-pill highlight">
+          <span class="icon">⏱️</span>
+          <span class="label">2s Watchdog Active</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="#downloads" class="btn btn-primary btn-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Get Apps
+        </a>
+        <a href="#api" class="btn btn-secondary btn-sm">API</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main IDE Workspace Container -->
+  <main class="ide-container">
+    <!-- Toolbar / Controls -->
+    <div class="ide-toolbar">
+      <div class="toolbar-left">
+        <div class="control-group">
+          <label for="template-select">Sample:</label>
+          <select id="template-select" class="dropdown">
+            <option value="hello">1. Hello Modern C++20</option>
+            <option value="watchdog">2. ⏱️ Watchdog TLE Demo</option>
+            <option value="cache">3. 🧠 Smart Binary Cache Test</option>
+            <option value="interactive">4. ⌨️ Interactive stdin Demo</option>
+            <option value="matrix">5. 📊 Matrix Multiply Benchmark</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="std-select">Standard:</label>
+          <select id="std-select" class="dropdown">
+            <option value="c++20" selected>ISO C++20</option>
+            <option value="c++17">ISO C++17 (Desktop Parity)</option>
+            <option value="c++23">ISO C++23</option>
+            <option value="c11">ISO C11</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="opt-select">Opt:</label>
+          <select id="opt-select" class="dropdown">
+            <option value="-O2" selected>-O2 (Fast)</option>
+            <option value="-O0">-O0 (Debug)</option>
+            <option value="-O3">-O3 (Max Speed)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toolbar-right">
+        <button id="token-btn" class="btn btn-token" title="Set sandbox access token">🔒</button>
+
+        <div class="autorun-toggle" title="Compiles automatically 500ms after you pause typing">
+          <input type="checkbox" id="autorun-check" checked>
+          <label for="autorun-check">
+            <span class="toggle-icon">⚡</span>
+            <span>500ms Auto-Run</span>
+          </label>
+        </div>
+
+        <button id="run-btn" class="btn btn-run">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>Run Code</span>
+          <kbd class="shortcut">Ctrl+↵</kbd>
+        </button>
+      </div>
+    </div>
+
+    <!-- Split-Pane Workspace (Desktop Parity) -->
+    <div class="workspace-grid">
+      <!-- Left Pane: Code Editor -->
+      <section class="pane editor-pane">
+        <div class="pane-header">
+          <div class="file-tab active">
+            <span class="file-icon">CPP</span>
+            <span class="file-name">main.cpp</span>
+            <span class="editor-indicator" id="typing-indicator">idle</span>
+          </div>
+          <div class="editor-stats">
+            <span id="line-col-counter">Ln 1, Col 1</span>
+          </div>
+        </div>
+
+        <div class="editor-body">
+          <div class="line-numbers" id="line-numbers">1</div>
+          <textarea id="code-editor" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Write C or C++ code here..."></textarea>
+        </div>
+
+        <!-- Inline Error Banner / Diagnostic Drawer -->
+        <div class="diagnostics-bar" id="diagnostics-bar" style="display: none;">
+          <div class="diag-header">
+            <span class="diag-title">⚠️ Compiler Diagnostics</span>
+            <button class="diag-close" id="diag-close">&times;</button>
+          </div>
+          <div class="diag-list" id="diag-list"></div>
+        </div>
+      </section>
+
+      <!-- Right Pane: Custom Input (Top) & Terminal Output (Bottom) -->
+      <section class="pane io-pane">
+        <!-- Custom Stdin View -->
+        <div class="io-subpane stdin-subpane">
+          <div class="pane-header">
+            <div class="subpane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              <span>Custom Input (stdin)</span>
+            </div>
+            <span class="io-hint">fed to std::cin on run</span>
+          </div>
+          <textarea id="stdin-editor" placeholder="Enter custom interactive input values here (optional)..."></textarea>
+        </div>
+
+        <!-- Terminal Output View -->
+        <div class="io-subpane stdout-subpane">
+          <div class="pane-header">
+            <div class="subpane-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              <span>Live Output & Terminal</span>
+            </div>
+            <div class="metrics-bar" id="metrics-bar">
+              <span class="metric" id="metric-status">Ready</span>
+              <span class="metric" id="metric-compile">Comp: --</span>
+              <span class="metric" id="metric-exec">Exec: --</span>
+              <span class="metric" id="metric-cache">Cache: --</span>
+            </div>
+          </div>
+          <div class="terminal-body" id="terminal-output">
+            <span class="terminal-dim">[RunCplus Cloud Sandbox Ready]</span>
+            <span class="terminal-dim">Press 'Run Code' or type to trigger debounced live execution.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Downloads & Ecosystem Section -->
+  <section class="downloads-section" id="downloads">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">The RunCplus Ecosystem</h2>
+        <p class="section-desc">Experience zero-friction C and C++ programming across Linux Desktop, Android Mobile, and Cloud Sandboxes.</p>
+      </div>
+
+      <div class="downloads-grid">
+        <!-- Desktop Card -->
+        <div class="download-card">
+          <div class="card-icon">🖥️</div>
+          <h3 class="card-title">RunCplus Desktop</h3>
+          <div class="card-badges">
+            <span class="badge">Linux x86_64</span>
+            <span class="badge">Qt 6.11</span>
+            <span class="badge">C++17</span>
+          </div>
+          <p class="card-text">
+            High-speed native C/C++ live editor. Features 500ms auto-compile, 2-second infinite loop watchdog, inline diagnostics, smart SHA-256 binary caching, and split-pane workspace.
+          </p>
+          <div class="card-meta">
+            <span>Size: ~340 KB</span>
+            <span>Version: v1.0 Production</span>
+          </div>
+          <a href="/downloads/RunCplus-Desktop-Linux-x86_64.tar.gz" class="btn btn-download">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Desktop (.tar.gz)
+          </a>
+        </div>
+
+        <!-- Mobile Card -->
+        <div class="download-card featured">
+          <div class="featured-ribbon">NEW RELEASE</div>
+          <div class="card-icon">📱</div>
+          <h3 class="card-title">RunCplus Mobile</h3>
+          <div class="card-badges">
+            <span class="badge">Android APK</span>
+            <span class="badge">Rust Core</span>
+            <span class="badge">Jetpack Compose</span>
+          </div>
+          <p class="card-text">
+            Ultra-responsive mobile C/C++ IDE. Zero-GC Rust <code>ropey</code> core with sub-8ms typing latency, Tree-sitter AST parser, Virtual CodeBar keyboard, and Dual Execution Engine.
+          </p>
+          <div class="card-meta">
+            <span>Size: ~20 MB</span>
+            <span>Version: v2.0 Mobile Edition</span>
+          </div>
+          <a href="/downloads/RunCplus-Mobile-v2.0.apk" class="btn btn-download btn-gradient">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Mobile APK (v2.0)
+          </a>
+        </div>
+
+        <!-- Cloud Sandbox Card -->
+        <div class="download-card">
+          <div class="card-icon">⚡</div>
+          <h3 class="card-title">Cloud Sandbox Runner</h3>
+          <div class="card-badges">
+            <span class="badge">Go High-Throughput</span>
+            <span class="badge">gRPC :50051</span>
+            <span class="badge">GCC 15.3</span>
+          </div>
+          <p class="card-text">
+            Isolated microVM compilation runner. Sub-25ms pre-warmed container allocation, real-time bidirectional ANSI output streaming, and distributed compilation cache layer.
+          </p>
+          <div class="card-meta">
+            <span>Protocol: HTTP/2 gRPC & REST</span>
+            <span>Status: Running Live</span>
+          </div>
+          <a href="#api" class="btn btn-download btn-outline">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            View API Reference
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REST API Reference Section -->
+  <section class="api-section" id="api">
+    <div class="section-container">
+      <div class="section-header">
+        <h2 class="section-title">Public Compilation REST API</h2>
+        <p class="section-desc">Integrate live C/C++ compilation directly into mobile clients, CI pipelines, or external tools.</p>
+      </div>
+
+      <div class="api-card">
+        <div class="api-endpoint">
+          <span class="http-badge post">POST</span>
+          <span class="endpoint-path">/api/run</span>
+        </div>
+        <div class="api-code-block">
+          <pre><code>curl -X POST https://&lt;current-host&gt;/api/run \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "#include &lt;iostream&gt;\nint main() { std::cout &lt;&lt; \"Hello RunCplus!\" &lt;&lt; std::endl; return 0; }",
+    "stdin": "",
+    "standard": "c++20",
+    "optimization": "-O2"
+  }'</code></pre>
+        </div>
+        <div class="api-response-sample">
+          <div class="sample-label">Sample JSON Response:</div>
+          <pre><code>{
+  "status": "success",
+  "stdout": "Hello RunCplus!\n",
+  "stderr": "",
+  "exit_code": 0,
+  "compile_duration_ms": 38.4,
+  "execution_duration_ms": 1.2,
+  "cached": false,
+  "diagnostics": []
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="brand-title">RunCplus</span> &copy; 2026. The Code-RunCplus &amp; RunCplus Mobile Monorepo.
+      </div>
+      <div class="footer-right">
+        <span>Backend: Go gRPC + GCC 15.3.1</span>
+        <span>Hosted via Cloudflare Tunnel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
