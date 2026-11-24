@@ -3,3 +3,6 @@ cache/bin_*
 *.pyc
 __pycache__/
 .DS_Store
+downloads/*.exe
+downloads/*.dmg
+downloads/*.AppImage
