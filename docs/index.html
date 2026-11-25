@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RunCplus — Live C++ IDE &amp; Online C/C++ Playground</title>
+<meta name="description" content="RunCplus is a live C/C++ IDE and online playground. Write code, pause, and it compiles and runs in under half a second. Free downloads for Linux, Windows, macOS and Android — no setup, no build scripts." />
+<meta name="keywords" content="RunCplus, runcplus, RunCplus IDE, RunCplus download, live C++ playground, online C++ compiler, run C++ online, C++ IDE for Windows, C++ IDE for macOS, C++ IDE for Linux, C++ editor Android, instant C++ runner" />
+<meta name="author" content="Md Mahim Islam" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<link rel="canonical" href="https://maheemrifat-lab.github.io/runcplus-web/" />
+<link rel="icon" type="image/svg+xml" href="icon.svg" />
+<link rel="apple-touch-icon" href="icon-512.png" />
+<meta name="theme-color" content="#1E1E2E" />
+<meta name="application-name" content="RunCplus" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="RunCplus" />
+<meta property="og:url" content="https://maheemrifat-lab.github.io/runcplus-web/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="RunCplus — Live C++ IDE &amp; Online C/C++ Playground" />
+<meta property="og:description" content="Write C++, see it run. A live C/C++ workspace that compiles and executes 500 ms after you stop typing — plus native builds for Linux, Windows, macOS and Android." />
+<meta property="og:image" content="https://maheemrifat-lab.github.io/runcplus-web/icon-512.png" />
+<meta property="og:image:alt" content="RunCplus app icon — white and coral brackets on a navy tile" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RunCplus — Live C++ IDE &amp; Online C/C++ Playground" />
+<meta name="twitter:description" content="Write C++, see it run. Instant compile-and-run for C and C++, in the browser and as a native app." />
+<meta name="twitter:image" content="https://maheemrifat-lab.github.io/runcplus-web/icon-512.png" />
+<link rel="sitemap" type="application/xml" href="sitemap.xml" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://maheemrifat-lab.github.io/runcplus-web/#website",
+      "url": "https://maheemrifat-lab.github.io/runcplus-web/",
+      "name": "RunCplus",
+      "alternateName": ["runcplus", "Run C Plus"],
+      "description": "Live C/C++ IDE and online playground that compiles and runs code as you type.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://maheemrifat-lab.github.io/runcplus-web/#founder" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://maheemrifat-lab.github.io/runcplus-web/#app",
+      "name": "RunCplus",
+      "alternateName": "runcplus",
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "Integrated Development Environment",
+      "operatingSystem": "Linux, Windows 10+, macOS 12+, Android",
+      "softwareVersion": "2.0.0",
+      "url": "https://maheemrifat-lab.github.io/runcplus-web/",
+      "downloadUrl": "https://maheemrifat-lab.github.io/runcplus-web/#downloads",
+      "image": "https://maheemrifat-lab.github.io/runcplus-web/icon-512.png",
+      "description": "RunCplus compiles and executes C and C++ in under half a second, with inline diagnostics and a watchdog sandbox. Available in the browser and as a native app for Linux, Windows, macOS and Android.",
+      "featureList": [
+        "Instant auto-run with a 500 ms debounce",
+        "Inline compiler diagnostics",
+        "Watchdog sandbox for runaway loops",
+        "Native desktop and Android builds",
+        "Free and open source under the MIT License"
+      ],
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "author": { "@id": "https://maheemrifat-lab.github.io/runcplus-web/#founder" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://maheemrifat-lab.github.io/runcplus-web/#founder",
+      "name": "Md Mahim Islam",
+      "jobTitle": "Founder & Lead Creator of RunCplus",
+      "affiliation": { "@type": "CollegeOrUniversity", "name": "IST" },
+      "knowsAbout": ["C++", "Qt", "Compiler Design", "Developer Tooling"],
+      "url": "https://maheemrifat-lab.github.io/runcplus-web/#founder"
+    }
+  ]
+}
+</script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#0F0F18;
+    --bg2:#12121C;
+    --surface:#1A1A26;
+    --surface2:#222232;
+    --border:#2C2C3C;
+    --border2:#3B3B4D;
+    --text:#F5F5F5;
+    --muted:#A9A9BC;
+    --dim:#74748A;
+    --coral:#F08A59;
+    --coral-d:#E0743F;
+    --coral-l:#FFC7AB;
+    --blue:#89B4FA;
+    --green:#A6E3A1;
+    --pink:#F38BA8;
+    --yellow:#F9E2AF;
+    --mono:'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  html{ overflow-x:hidden; scroll-behavior:smooth; }
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:var(--sans); -webkit-font-smoothing:antialiased;
+    overflow-x:hidden; width:100%;
+  }
+  header{ overflow:hidden; position:relative; }
+  .wrap{ width:min(1200px, 92vw); margin:0 auto; }
+
+  .ic{ width:18px; height:18px; stroke:currentColor; stroke-width:1.7;
+    fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .card .ico{ color:var(--coral); }
+  .dlcard .big{ color:var(--muted); }
+  .dlcard .big .ic{ width:24px; height:24px; }
+
+  .glow{ position:absolute; border-radius:50%; filter:blur(120px); pointer-events:none; }
+  .g1{ width:760px; height:540px; background:rgba(240,138,89,.18); top:-200px; left:80px; }
+  .g2{ width:560px; height:420px; background:rgba(137,180,250,.10); top:130px; right:-40px; }
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 0; position:relative; z-index:2;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; }
+  .mark{
+    width:40px; height:40px; border-radius:11px; overflow:hidden;
+    border:1px solid rgba(240,138,89,.35);
+    box-shadow:0 6px 22px rgba(240,138,89,.22);
+    display:flex; align-items:center; justify-content:center; flex:none;
+    background:#1E1E2E;
+  }
+  .mark img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .brand b{ font-size:17px; letter-spacing:-.3px; font-weight:700; }
+  .brand .ver{ font-size:11px; color:var(--muted); border:1px solid var(--border2);
+    padding:2px 7px; border-radius:99px; margin-left:2px; }
+  .links{ display:flex; gap:34px; font-size:14px; color:var(--muted); }
+  .links a{ color:inherit; text-decoration:none; transition:color .15s; }
+  .links a:hover{ color:var(--coral); }
+  .navcta{
+    display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+    background:linear-gradient(180deg,#F79A6E,#E0743F);
+    color:#1B1220; font-size:14px; font-weight:700;
+    padding:10px 18px; border-radius:9px;
+    box-shadow:0 8px 26px rgba(240,138,89,.30);
+  }
+  .navcta:hover{ filter:brightness(1.07); }
+
+  .hero{ position:relative; display:grid; grid-template-columns:1fr 620px; gap:56px;
+    padding:64px 0 40px; align-items:center; }
+  .pill{
+    display:inline-flex; align-items:center; gap:9px;
+    border:1px solid var(--border2); background:rgba(255,255,255,.025);
+    padding:7px 13px; border-radius:99px; font-size:12.5px; color:var(--muted);
+    margin-bottom:26px;
+  }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--green);
+    box-shadow:0 0 10px var(--green); flex:none; }
+  h1{
+    font-size:64px; line-height:1.04; letter-spacing:-2.6px; font-weight:800;
+    margin-bottom:22px;
+  }
+  h1 .grad{
+    background:linear-gradient(100deg,#FFD3BB 0%,#F08A59 52%,#89B4FA 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{ font-size:17.5px; line-height:1.65; color:var(--muted); max-width:520px; }
+  .sub b{ color:#DCDCE8; font-weight:600; }
+  .ctas{ display:flex; gap:14px; margin-top:34px; align-items:center; flex-wrap:wrap; }
+  .btn-primary{
+    background:linear-gradient(180deg,#F79A6E,#E0743F); color:#1B1220;
+    font-size:15px; font-weight:700; padding:14px 26px; border-radius:10px;
+    box-shadow:0 10px 30px rgba(240,138,89,.32); text-decoration:none;
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn-primary:hover{ filter:brightness(1.06); }
+  .btn-ghost{
+    border:1px solid var(--border2); color:#DCDCE8; font-size:15px; font-weight:600;
+    padding:13px 24px; border-radius:10px; background:rgba(255,255,255,.02);
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+  }
+  .btn-ghost:hover{ border-color:rgba(240,138,89,.5); color:var(--coral); }
+  .trust{ display:flex; gap:22px; margin-top:30px; font-size:12.5px; color:var(--dim); flex-wrap:wrap; }
+  .trust i{ color:var(--green); font-style:normal; margin-right:6px; }
+
+  .code-card{
+    position:relative; background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; overflow:hidden;
+    box-shadow:0 30px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.02) inset;
+  }
+  .code-top{
+    display:flex; align-items:center; gap:8px; padding:13px 16px;
+    border-bottom:1px solid var(--border); background:#16161F;
+  }
+  .tl{ width:11px; height:11px; border-radius:50%; }
+  .tl.r{ background:#F38BA8; } .tl.y{ background:#F9E2AF; } .tl.g{ background:#A6E3A1; }
+  .code-file{ margin-left:12px; font-family:var(--mono); font-size:12px; color:var(--muted); }
+  .code-badge{ margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--blue);
+    background:rgba(137,180,250,.10); border:1px solid rgba(137,180,250,.26);
+    padding:3px 9px; border-radius:6px; }
+  .code-body{
+    font-family:var(--mono); font-size:13.5px; line-height:1.95; padding:20px 22px;
+    color:#CDD6F4; background:linear-gradient(180deg,#191924,#12121C);
+    overflow-x:auto;
+  }
+  .ln{ color:#4B4B60; display:inline-block; width:22px; user-select:none; }
+  .kw{ color:#F38BA8; } .fn{ color:#89B4FA; } .str{ color:#A6E3A1; }
+  .num{ color:#FAB387; } .cm{ color:#6C7086; } .ty{ color:#F9E2AF; }
+  .code-foot{
+    display:flex; align-items:center; gap:14px; padding:12px 20px;
+    border-top:1px solid var(--border); background:#15151F;
+    font-family:var(--mono); font-size:12px; flex-wrap:wrap;
+  }
+  .ok{ color:var(--green); }
+  .metric{ color:var(--dim); }
+  .metric b{ color:#C6C6D8; font-weight:600; }
+  .runpill{
+    margin-left:auto; background:rgba(166,227,161,.11); color:var(--green);
+    border:1px solid rgba(166,227,161,.26); padding:4px 11px; border-radius:99px;
+    font-size:11.5px;
+  }
+
+  .stats{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--border); border-radius:14px;
+    background:linear-gradient(180deg,rgba(240,138,89,.05),rgba(255,255,255,0));
+    margin:34px 0 96px; overflow:hidden;
+  }
+  .stat{ padding:24px 26px; border-right:1px solid var(--border); }
+  .stat:last-child{ border-right:0; }
+  .stat b{ display:block; font-size:26px; letter-spacing:-.8px; margin-bottom:5px; color:var(--coral-l); }
+  .stat span{ font-size:12.5px; color:var(--muted); }
+
+  .sechead{ text-align:center; margin-bottom:46px; }
+  .eyebrow{ font-size:12px; letter-spacing:1.6px; text-transform:uppercase;
+    color:var(--coral); font-weight:700; margin-bottom:14px; }
+  h2{ font-size:40px; letter-spacing:-1.3px; line-height:1.15; font-weight:750; }
+  .sechead p{ margin-top:14px; color:var(--muted); font-size:16px; }
+
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .card{
+    background:linear-gradient(180deg,var(--surface),var(--bg2));
+    border:1px solid var(--border); border-radius:14px; padding:26px 24px 28px;
+    position:relative; overflow:hidden;
+  }
+  .card:before{
+    content:''; position:absolute; inset:0 0 auto 0; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(240,138,89,.38),transparent);
+  }
+  .ico{
+    width:38px; height:38px; border-radius:10px; margin-bottom:18px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(240,138,89,.10); border:1px solid rgba(240,138,89,.22);
+  }
+  .card h3{ font-size:16.5px; font-weight:650; margin-bottom:9px; letter-spacing:-.2px; }
+  .card p{ font-size:13.8px; line-height:1.62; color:var(--muted); }
+
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .step{ border:1px solid var(--border); border-radius:14px; padding:26px 24px;
+    background:var(--surface); }
+  .stepn{ font-family:var(--mono); font-size:12px; color:var(--coral);
+    border:1px solid rgba(240,138,89,.32); background:rgba(240,138,89,.10);
+    width:30px; height:30px; border-radius:8px; display:flex;
+    align-items:center; justify-content:center; margin-bottom:16px; font-weight:700; }
+  .step h4{ font-size:15.5px; margin-bottom:8px; font-weight:650; }
+  .step p{ font-size:13.5px; color:var(--muted); line-height:1.6; }
+
+  .dl{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .dlcard{
+    display:flex; align-items:center; gap:18px; padding:24px 26px;
+    border:1px solid var(--border); border-radius:14px;
+    background:linear-gradient(135deg,rgba(240,138,89,.07),rgba(255,255,255,.01));
+    flex-wrap:wrap;
+  }
+  .dlcard .big{
+    width:52px; height:52px; border-radius:13px; display:flex;
+    align-items:center; justify-content:center; flex:none;
+    background:rgba(255,255,255,.035); border:1px solid var(--border2);
+  }
+  .dlcard h4{ font-size:16px; margin-bottom:4px; }
+  .dlcard p{ font-size:12.8px; color:var(--muted); font-family:var(--mono); }
+  .dlacts{ margin-left:auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .dlbtn{ border:1px solid var(--border2); border-radius:9px;
+    padding:10px 16px; font-size:13px; font-weight:600; color:#DCDCE8;
+    background:rgba(255,255,255,.03); text-decoration:none; white-space:nowrap; }
+  .dlbtn:hover{ border-color:rgba(240,138,89,.55); color:var(--coral); }
+  .dlbtn.primary{
+    background:linear-gradient(180deg,#F79A6E,#E0743F); color:#1B1220;
+    border-color:transparent; box-shadow:0 6px 18px rgba(240,138,89,.24);
+  }
+  .dlbtn.primary:hover{ filter:brightness(1.06); color:#1B1220; }
+  .dl-btn-label{ display:inline-flex; align-items:center; gap:6px; }
+
+  .founder-card{
+    background:linear-gradient(135deg,rgba(240,138,89,.08),rgba(137,180,250,.04),var(--surface));
+    border:1px solid var(--border); border-radius:18px; padding:36px 40px;
+    display:flex; gap:32px; align-items:flex-start; position:relative; overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+  }
+  .founder-card:before{
+    content:''; position:absolute; inset:0 0 auto 0; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(240,138,89,.5),transparent);
+  }
+  .founder-avatar{ flex:none; }
+  .avatar-badge{
+    width:72px; height:72px; border-radius:18px;
+    background:linear-gradient(135deg,#F08A59,#89B4FA);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:24px; color:#14151F;
+    box-shadow:0 8px 24px rgba(240,138,89,.3);
+  }
+  .founder-info{ flex:1; min-width:0; }
+  .founder-header{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px; }
+  .founder-header h3{ font-size:22px; font-weight:750; letter-spacing:-.4px; }
+  .founder-role{ font-size:13.5px; color:var(--coral); font-weight:600; margin-top:2px; }
+  .inst-pill{
+    display:inline-flex; align-items:center; padding:5px 13px; border-radius:99px;
+    background:rgba(255,255,255,.04); border:1px solid var(--border2);
+    font-size:12.5px; color:var(--muted); font-weight:500;
+  }
+  .founder-bio{ font-size:14.5px; line-height:1.7; color:#CDD6F4; margin-bottom:20px; }
+  .founder-bio b{ color:#FFF; font-weight:600; }
+  .founder-links{ display:flex; gap:16px; flex-wrap:wrap; }
+  .founder-link{
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:600;
+    color:var(--text); text-decoration:none; padding:8px 14px; border-radius:8px;
+    background:rgba(255,255,255,.03); border:1px solid var(--border); transition:all .15s;
+  }
+  .founder-link:hover{ border-color:var(--coral); color:var(--coral); }
+  @media (max-width:720px){
+    .founder-card{ flex-direction:column; padding:24px; gap:20px; }
+    .avatar-badge{ width:56px; height:56px; font-size:20px; border-radius:14px; }
+  }
+
+  .band{
+    position:relative; overflow:hidden; text-align:center;
+    border:1px solid rgba(240,138,89,.26); border-radius:20px;
+    background:radial-gradient(120% 180% at 50% 0%,rgba(240,138,89,.18),rgba(15,15,24,.94) 62%);
+    padding:64px 40px; margin:96px 0;
+  }
+  .band .badge{ width:76px; height:76px; margin:0 auto 24px; border-radius:18px;
+    overflow:hidden; border:1px solid rgba(240,138,89,.30);
+    box-shadow:0 14px 34px rgba(240,138,89,.28); background:#1E1E2E; }
+  .band .badge img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .band h2{ font-size:38px; }
+  .band p{ color:#C6C6D8; margin:16px auto 30px; font-size:16px; max-width:520px; }
+  .band .btn-primary{ margin:0 auto; width:fit-content; }
+
+  footer{ border-top:1px solid var(--border); padding:34px 0 46px; }
+  .foot{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .foot .mark{ width:28px; height:28px; border-radius:8px; }
+  .foot b{ font-size:14px; }
+  .foot .muted{ font-size:12.5px; color:var(--dim); }
+  .footlinks{ display:flex; gap:26px; font-size:12.5px; color:var(--muted); }
+  .footlinks a{ color:inherit; text-decoration:none; }
+  .footlinks a:hover{ color:var(--coral); }
+  section{ position:relative; }
+  .sec{ padding:96px 0 0; }
+
+  @media (max-width:1080px){
+    .hero{ grid-template-columns:1fr; gap:44px; padding-top:44px; }
+    h1{ font-size:56px; }
+    .grid3, .steps{ grid-template-columns:1fr 1fr; }
+    .dl{ grid-template-columns:1fr; }
+    .links{ display:none; }
+  }
+  @media (max-width:720px){
+    h1{ font-size:42px; letter-spacing:-1.6px; }
+    h2{ font-size:30px; }
+    .band h2{ font-size:28px; }
+    .stats{ grid-template-columns:1fr 1fr; }
+    .stat{ border-right:0; border-bottom:1px solid var(--border); }
+    .stat:nth-child(odd){ border-right:1px solid var(--border); }
+    .grid3, .steps{ grid-template-columns:1fr; }
+    .band{ padding:44px 22px; margin:64px 0; }
+    .sec{ padding:64px 0 0; }
+    .stats{ margin-bottom:64px; }
+  }
+</style>
+<!-- RunCplus public download hub: Windows .exe, macOS .dmg, Linux .AppImage, Android .apk. Author: Md Mahim Islam (IST CSE). -->
+</head>
+<body>
+
+<header>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="./">
+        <div class="mark"><img src="icon.svg" alt="RunCplus logo" /></div>
+        <b>RunCplus</b>
+        <span class="ver">v2.0</span>
+      </a>
+      <div class="links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#downloads">Downloads</a>
+        <a href="#founder">Founder</a>
+        <a href="https://github.com/maheemrifat-lab/runcplus-web/releases" rel="noopener">Releases</a>
+      </div>
+      <a class="navcta" href="https://run-cplus-playground.go.altare.global/play">Open Playground →</a>
+    </nav>
+
+    <div class="hero">
+      <div>
+        <div class="pill"><span class="dot"></span> Sandbox online · GCC 12.2 · 0 ms setup</div>
+        <h1>Write C++.<br><span class="grad">See it run.</span></h1>
+        <p class="sub">RunCplus compiles and executes your code the moment you pause typing.
+          <b>No build scripts, no broken environments</b> — just a live C/C++ workspace
+          that answers in under half a second.</p>
+        <div class="ctas">
+          <a class="btn-primary" href="https://run-cplus-playground.go.altare.global/play">Start coding free</a>
+          <a class="btn-ghost" href="#downloads">Download desktop</a>
+        </div>
+        <div class="trust">
+          <span><i>✓</i>No signup required</span>
+          <span><i>✓</i>C++17 / 20 / 23 · C11</span>
+          <span><i>✓</i>Watchdog-protected</span>
+        </div>
+      </div>
+
+      <div class="code-card">
+        <div class="code-top">
+          <div class="tl r"></div><div class="tl y"></div><div class="tl g"></div>
+          <div class="code-file">playground / main.cpp</div>
+          <div class="code-badge">g++ · c++20</div>
+        </div>
+        <div class="code-body">
+<div><span class="ln">1</span><span class="cm">// auto-runs 500 ms after you stop typing</span></div>
+<div><span class="ln">2</span><span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span></div>
+<div><span class="ln">3</span><span class="kw">#include</span> <span class="str">&lt;vector&gt;</span></div>
+<div><span class="ln">4</span>&nbsp;</div>
+<div><span class="ln">5</span><span class="ty">int</span> <span class="fn">main</span>() {</div>
+<div><span class="ln">6</span>&nbsp;&nbsp;&nbsp;&nbsp;std::vector&lt;<span class="ty">int</span>&gt; v{<span class="num">2</span>, <span class="num">4</span>, <span class="num">6</span>, <span class="num">8</span>};</div>
+<div><span class="ln">7</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">for</span> (<span class="kw">auto</span> n : v)</div>
+<div><span class="ln">8</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; n * <span class="num">2</span> &lt;&lt; <span class="str">' '</span>;</div>
+<div><span class="ln">9</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="num">0</span>;</div>
+<div><span class="ln">10</span>}</div>
+        </div>
+        <div class="code-foot">
+          <span class="ok">● success</span>
+          <span class="metric">build <b>348 ms</b></span>
+          <span class="metric">run <b>3.7 ms</b></span>
+          <span class="metric">exit <b>0</b></span>
+          <span class="runpill">auto-run on</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>&lt;400ms</b><span>compile feedback</span></div>
+      <div class="stat"><b>4</b><span>C &amp; C++ standards</span></div>
+      <div class="stat"><b>2.0s</b><span>infinite-loop watchdog</span></div>
+      <div class="stat"><b>0</b><span>toolchain setup steps</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="eyebrow">Built for momentum</div>
+      <h2>Everything an IDE does.<br>None of the waiting.</h2>
+      <p>Traditional editors make you save, compile, run, repeat. RunCplus collapses that loop.</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><div class="ico"><svg class="ic" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><h3>Instant auto-run</h3>
+        <p>A 500 ms debounce compiles in the background while you type, so the answer is already waiting.</p></div>
+      <div class="card"><div class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></svg></div><h3>Inline diagnostics</h3>
+        <p>Compiler errors are parsed into line and column markers, not a wall of stderr text.</p></div>
+      <div class="card"><div class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div><h3>Watchdog sandbox</h3>
+        <p>Runaway loops and infinite recursion are terminated at 2 seconds — your session never hangs.</p></div>
+      <div class="card"><div class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.9-6.6"/><polyline points="21 3 21 8 16 8"/></svg></div><h3>Binary cache</h3>
+        <p>SHA-256 content hashing skips recompilation of unchanged code, returning results in 0 ms.</p></div>
+      <div class="card"><div class="ico"><svg class="ic" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Desktop &amp; Android</h3>
+        <p>A native Qt 6 desktop IDE and a mobile companion app share the same engine and theme.</p></div>
+      <div class="card"><div class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M17.5 19a4.5 4.5 0 0 0 .6-8.96A6 6 0 0 0 6.3 9.5 4 4 0 0 0 7 17.5h10.5z"/></svg></div><h3>Zero-setup cloud</h3>
+        <p>No compilers to install, no PATH to fix. Open a tab and write C++ on any machine.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="eyebrow">Three steps</div>
+      <h2>From blank file to running code</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="stepn">01</div><h4>Write</h4>
+        <p>Open the playground and start typing C or C++. Syntax highlighting and completion follow you.</p></div>
+      <div class="step"><div class="stepn">02</div><h4>Pause</h4>
+        <p>Half a second after your last keystroke, the build starts automatically in the sandbox.</p></div>
+      <div class="step"><div class="stepn">03</div><h4>Read the result</h4>
+        <p>stdout, stderr, exit code and timings land in the terminal panel with inline error markers.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="downloads">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="eyebrow">Take it with you</div>
+      <h2>Run it locally or on your phone</h2>
+      <p>Native builds for Linux, Windows, macOS and Android — the same engine, packaged stand-alone.</p>
+    </div>
+    <div class="dl">
+      <div class="dlcard">
+        <div class="big"><svg class="ic" viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="15" rx="2"/><polyline points="6.5 8.5 9.5 11.5 6.5 14.5"/><line x1="11.5" y1="15" x2="16" y2="15"/></svg></div>
+        <div><h4>Linux · x86_64</h4><p>Qt 6 bundled · 26.2 MB</p></div>
+        <div class="dlacts">
+          <a class="dlbtn primary" href="https://github.com/maheemrifat-lab/runcplus-web/releases/download/v2.0.0/RunCplus-Linux-x86_64.AppImage">Download</a>
+        </div>
+      </div>
+      <div class="dlcard">
+        <div class="big"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1"/></svg></div>
+        <div><h4>Windows · x64</h4><p>Windows 10/11 · Setup · 21.3 MB</p></div>
+        <div class="dlacts">
+          <a class="dlbtn primary" href="https://github.com/maheemrifat-lab/runcplus-web/releases/download/v2.0.0/RunCplus-Windows-x64-Setup.exe">Download</a>
+        </div>
+      </div>
+      <div class="dlcard">
+        <div class="big"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="11.5" rx="1.6"/><line x1="2" y1="18.5" x2="22" y2="18.5"/><line x1="9.5" y1="18.5" x2="14.5" y2="18.5"/></svg></div>
+        <div><h4>macOS · Apple Silicon</h4><p>macOS 12+ · 23.0 MB</p></div>
+        <div class="dlacts">
+          <a class="dlbtn primary" href="https://github.com/maheemrifat-lab/runcplus-web/releases/download/v2.0.0/RunCplus-macOS-arm64.dmg">Download</a>
+        </div>
+      </div>
+      <div class="dlcard">
+        <div class="big"><svg class="ic" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"/></svg></div>
+        <div><h4>Android · APK</h4><p>v2.0 · 20.0 MB</p></div>
+        <div class="dlacts">
+          <a class="dlbtn primary" href="https://github.com/maheemrifat-lab/runcplus-web/releases/download/v2.0.0/RunCplus-Mobile-v2.0.apk">Download</a>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:18px; font-size:12.5px; color:var(--dim); text-align:center;">
+      Linux, Windows and macOS builds need a system C/C++ compiler (GCC, MinGW-w64 or Xcode Command Line Tools) — each download includes a README with the one-line setup.
+    </p>
+  </div>
+</section>
+
+<section class="sec" id="founder">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="eyebrow">Creator & Leadership</div>
+      <h2>Meet the Founder</h2>
+      <p>The vision and engineering behind the live C/C++ playground.</p>
+    </div>
+    <div class="founder-card">
+      <div class="founder-avatar">
+        <div class="avatar-badge">MI</div>
+      </div>
+      <div class="founder-info">
+        <div class="founder-header">
+          <div>
+            <h3>Md Mahim Islam (CSE)</h3>
+            <div class="founder-role">Founder & Lead Creator, RunCplus</div>
+          </div>
+          <div class="founder-inst">
+            <span class="inst-pill">Institute of Science and Technology (IST)</span>
+          </div>
+        </div>
+        <p class="founder-bio">
+          Md Mahim Islam is a Computer Science and Engineering student at the Institute of Science and Technology (IST) and the founder and lead creator of <b>RunCplus</b>. Passionate about systems programming, developer tooling, and modern high-performance architectures, Mahim designed and engineered RunCplus to eliminate toolchain friction and deliver an effortless, real-time C/C++ development environment across Linux, Windows, macOS, Android, and the web.
+        </p>
+        <div class="founder-links">
+          <a class="founder-link" href="https://github.com/maheemrifat-lab" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub (@maheemrifat-lab)
+          </a>
+          <a class="founder-link" href="https://github.com/maheemrifat-lab/RunCplus" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            RunCplus Project
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="band">
+    <div class="badge"><img src="icon.svg" alt="RunCplus" /></div>
+    <h2>No install. No setup.<br>Just code.</h2>
+    <p>Open the playground and your first C++ program runs before you finish reading this sentence.</p>
+    <a class="btn-primary" href="https://run-cplus-playground.go.altare.global/play">Launch RunCplus →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="brand">
+      <div class="mark"><img src="icon.svg" alt="RunCplus" /></div>
+      <b>RunCplus</b>
+      <span class="muted" style="margin-left:4px;">© 2026 Md Mahim Islam (IST CSE) · MIT licensed</span>
+    </div>
+    <div class="footlinks">
+      <a href="https://github.com/maheemrifat-lab/RunCplus">GitHub</a>
+      <a href="https://github.com/maheemrifat-lab/runcplus-web/releases" rel="noopener">Releases</a>
+      <a href="https://run-cplus-playground.go.altare.global/play">Playground</a>
+      <a href="./#downloads">Downloads</a>
+      <a href="./#founder">Founder</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -5,7 +5,10 @@
 [![Downloads](https://img.shields.io/badge/Direct_Downloads-Windows%20%7C%20macOS%20%7C%20Linux%20%7C%20Android-blue?style=for-the-badge)](https://github.com/maheemrifat-lab/runcplus-web/releases/tag/v2.0.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-**RunCplus** (also known as `runcplus`) is a high-speed, cross-platform C and C++ live code editor, IDE, and instant compilation suite created and founded by **Md Mahim Islam (CSE)**.
+> ### 🌐 Official website: **[RunCplus — Live C & C++ IDE](https://maheemrifat-lab.github.io/runcplus-web/)**
+> Free direct downloads for Windows, macOS, Linux and Android. No account, no ZIP files.
+
+**RunCplus** (also known as `runcplus`) is a high-speed, cross-platform C and C++ live code editor, IDE, and instant compilation suite created and founded by **Md Mahim Islam (CSE)**, Institute of Science and Technology (IST).
 
 Unlike traditional IDEs that require manual saving, compiling, and running, **RunCplus** automatically compiles and runs code in real time as you type, providing instant compiler diagnostics, sandbox watchdog safety, and sub-second feedback.
 
